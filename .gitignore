@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+*.env.local
+
+# Logs
+logs/
+*.log
+
+# Uploads and generated files
+server/uploads/
+server/frames/
+
+# Build
+dashboard/build/
+
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
