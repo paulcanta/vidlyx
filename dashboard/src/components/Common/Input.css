@@ -1,0 +1,82 @@
+/* Input Container */
+.input-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Label */
+.input-label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+  display: block;
+}
+
+/* Input Wrapper */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Input Icon */
+.input-icon {
+  position: absolute;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+/* Base Input */
+.input {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  font-size: var(--text-base);
+  font-family: inherit;
+  outline: none;
+  transition: all var(--transition-normal);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.input-with-icon {
+  padding-left: 2.5rem;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.input:disabled {
+  background-color: var(--bg-secondary);
+  cursor: not-allowed;
+  color: var(--text-tertiary);
+}
+
+/* Error State */
+.input-error {
+  border-color: var(--color-error);
+}
+
+.input-error:focus {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.input-error-message {
+  font-size: var(--text-sm);
+  color: var(--color-error);
+  margin-top: var(--space-2);
+}
+
+/* Placeholder */
+.input::placeholder {
+  color: var(--text-tertiary);
+}
