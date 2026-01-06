@@ -1,0 +1,121 @@
+/* ============================================
+   Page Transition Animations
+   Smooth transitions between route changes
+   ============================================ */
+
+.page-transition-group {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.page-transition-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+/* ============================================
+   FADE MODE
+   ============================================ */
+
+/* Entering */
+.page-fade-enter {
+  opacity: 0;
+}
+
+.page-fade-enter-active {
+  opacity: 1;
+  transition: opacity var(--transition-normal);
+}
+
+/* Exiting */
+.page-fade-exit {
+  opacity: 1;
+}
+
+.page-fade-exit-active {
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+/* ============================================
+   SLIDE MODE
+   ============================================ */
+
+/* Entering */
+.page-slide-enter {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.page-slide-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity var(--transition-normal),
+              transform var(--transition-normal);
+}
+
+/* Exiting */
+.page-slide-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.page-slide-exit-active {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity var(--transition-normal),
+              transform var(--transition-normal);
+}
+
+/* ============================================
+   SCALE MODE
+   ============================================ */
+
+/* Entering */
+.page-scale-enter {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.page-scale-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity var(--transition-normal),
+              transform var(--transition-normal);
+}
+
+/* Exiting */
+.page-scale-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.page-scale-exit-active {
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity var(--transition-normal),
+              transform var(--transition-normal);
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .page-fade-enter,
+  .page-fade-enter-active,
+  .page-fade-exit,
+  .page-fade-exit-active,
+  .page-slide-enter,
+  .page-slide-enter-active,
+  .page-slide-exit,
+  .page-slide-exit-active,
+  .page-scale-enter,
+  .page-scale-enter-active,
+  .page-scale-exit,
+  .page-scale-exit-active {
+    transition: none !important;
+    transform: none !important;
+  }
+}

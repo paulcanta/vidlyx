@@ -1,0 +1,55 @@
+/* ============================================
+   Analysis Dashboard - Additional Styles
+   ============================================ */
+
+/* Animation Overrides for Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .analysis-section {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .spinning {
+    animation: none;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .analysis-dashboard {
+    overflow: visible;
+    height: auto;
+  }
+
+  .dashboard-sections {
+    overflow: visible;
+    height: auto;
+  }
+
+  .dashboard-actions,
+  .billing-notice {
+    display: none;
+  }
+
+  .analysis-section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .analysis-section {
+    border: 2px solid #000;
+  }
+
+  .action-btn {
+    border: 2px solid #000;
+  }
+}
+
+/* Dark Mode Support (future) */
+@media (prefers-color-scheme: dark) {
+  /* Placeholder for dark mode styles */
+}

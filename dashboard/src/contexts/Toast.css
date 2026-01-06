@@ -11,27 +11,70 @@
   width: 100%;
 }
 
+/* ============================================
+   TOAST ANIMATIONS
+   ============================================ */
+
 /* Toast */
 .toast {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   padding: 1rem;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  background-color: var(--bg-primary);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-lg);
   border-left: 4px solid;
-  animation: slideIn 0.3s ease-out;
+  animation: slideInRight var(--transition-toast);
+  transform-origin: right center;
 }
 
-@keyframes slideIn {
+/* Enter Animation */
+@keyframes slideInRight {
   from {
-    transform: translateX(100%);
+    transform: translateX(calc(100% + 1rem));
     opacity: 0;
   }
   to {
     transform: translateX(0);
     opacity: 1;
+  }
+}
+
+/* Exit Animation */
+.toast-exiting {
+  animation: slideOutRight var(--transition-fast);
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(calc(100% + 1rem));
+    opacity: 0;
+  }
+}
+
+/* Progress Bar Animation */
+.toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background-color: currentColor;
+  opacity: 0.3;
+  animation: toastProgress linear;
+  transform-origin: left;
+}
+
+@keyframes toastProgress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
   }
 }
 
@@ -107,5 +150,51 @@
     left: 1rem;
     right: 1rem;
     max-width: none;
+  }
+
+  /* Mobile: slide from bottom */
+  @keyframes slideInRight {
+    from {
+      transform: translateY(calc(100% + 1rem));
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideOutRight {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(calc(100% + 1rem));
+      opacity: 0;
+    }
+  }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: none !important;
+  }
+
+  .toast-exiting {
+    animation: none !important;
+    opacity: 0;
+  }
+
+  .toast-progress {
+    animation: none !important;
+  }
+
+  .toast-close {
+    transition: none !important;
   }
 }

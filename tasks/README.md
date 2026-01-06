@@ -127,6 +127,53 @@ Final polish and optimization.
 
 ---
 
+## VideoAnalysis Page Redesign (Tasks 9-11)
+
+Based on vidlyx-plan2.md - comprehensive redesign of the video analysis page.
+
+### Task 9: Layout Foundation
+Restructure VideoAnalysis page with split-pane layout, compact header, and video player modes.
+
+**Deliverables:**
+- CompactHeader component (48px)
+- Split-pane layout (Video+Transcript | Summary)
+- Video player modes (Default 50% / Theater 80% / Fullscreen)
+- Mobile responsive layout (L-R, T-B priority)
+
+**Dependencies:** None (foundation task)
+
+---
+
+### Task 10: Frame System & Summary Enhancement
+Implement frame capture with transcript linking, video type detection, and redesign all summary tabs.
+
+**Deliverables:**
+- FrameStrip horizontal carousel
+- FrameCaptureModal with OCR + transcript linking (±15s)
+- Frame analysis service interface (manual now, AI-ready)
+- VideoTypeDetector (10 video types)
+- OverviewTab adaptive layout by video type
+- SectionsTab with time ranges, importance, timeline
+- KeyPointsTab with category filters
+
+**Dependencies:** Task 9
+
+---
+
+### Task 11: Full Analysis Dashboard & Polish
+Create comprehensive Full Analysis tab, implement regeneration system with tracking, and final polish.
+
+**Deliverables:**
+- AnalysisDashboard component (Content Metrics, Comprehensive Summary, Visual Analysis, Transcript Analysis, Quality Assessment, Related Topics)
+- Regeneration UI + database tracking for future billing
+- Export functionality (MD, PDF, JSON, TXT)
+- Animation & transitions
+- Final responsive testing
+
+**Dependencies:** Task 9, Task 10
+
+---
+
 ## Total MVP Development Time
 **Estimated: 99-144 hours (12-18 weeks at part-time)**
 

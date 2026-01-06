@@ -8,9 +8,11 @@
   border-radius: var(--border-radius-md);
   border: none;
   cursor: pointer;
-  transition: all var(--transition-normal);
+  transition: all var(--transition-button);
   font-family: inherit;
   line-height: 1;
+  position: relative;
+  overflow: hidden;
 }
 
 .button:focus {
@@ -87,7 +89,50 @@
   background-color: var(--bg-secondary);
 }
 
-/* Loading Spinner */
+/* ============================================
+   BUTTON ANIMATIONS
+   ============================================ */
+
+/* Hover Effects */
+.button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Ripple Effect */
+.button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%);
+  transition: width var(--duration-fast), height var(--duration-fast);
+}
+
+.button:active:not(:disabled)::after {
+  width: 300px;
+  height: 300px;
+  opacity: 0;
+  transition: width var(--duration-slow),
+              height var(--duration-slow),
+              opacity var(--duration-slow);
+}
+
+/* Loading State */
+.button-loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
 .button-spinner {
   animation: spin 1s linear infinite;
 }
@@ -98,5 +143,65 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* Icon Animations */
+.button:hover:not(:disabled) .button-icon {
+  transform: scale(1.1);
+}
+
+.button-icon {
+  transition: transform var(--transition-fast);
+}
+
+/* ============================================
+   VARIANT-SPECIFIC ANIMATIONS
+   ============================================ */
+
+/* Primary Button Ripple */
+.button-primary::after {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Danger Button Ripple */
+.button-danger::after {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Ghost Button Ripple */
+.button-ghost::after {
+  background-color: rgba(99, 102, 241, 0.2);
+}
+
+/* Outline Button Ripple */
+.button-outline::after {
+  background-color: rgba(99, 102, 241, 0.15);
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+
+  .button:hover:not(:disabled),
+  .button:active:not(:disabled) {
+    transform: none;
+  }
+
+  .button::after {
+    display: none;
+  }
+
+  .button-icon {
+    transition: none;
+  }
+
+  .button:hover:not(:disabled) .button-icon {
+    transform: none;
   }
 }

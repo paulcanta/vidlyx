@@ -1,0 +1,293 @@
+/* Search Modal Overlay */
+.search-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10vh;
+  z-index: 9999;
+  animation: search-modal-fade-in 0.2s ease-out;
+}
+
+@keyframes search-modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Search Modal Container */
+.search-modal {
+  background: var(--color-bg-primary, #ffffff);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 640px;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  animation: search-modal-slide-down 0.25s ease-out;
+  overflow: hidden;
+}
+
+@keyframes search-modal-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Search Modal Header */
+.search-modal-header {
+  border-bottom: 1px solid var(--color-border, #e5e7eb);
+  padding: 16px;
+}
+
+/* Search Input Wrapper */
+.search-modal-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.search-modal-input-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--color-text-tertiary, #9ca3af);
+  pointer-events: none;
+}
+
+.search-modal-input {
+  width: 100%;
+  padding: 12px 40px 12px 40px;
+  border: 2px solid var(--color-border, #e5e7eb);
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: inherit;
+  background: var(--color-bg-secondary, #f9fafb);
+  color: var(--color-text-primary, #111827);
+  transition: all 0.2s;
+}
+
+.search-modal-input:focus {
+  outline: none;
+  border-color: var(--color-primary, #3b82f6);
+  background: var(--color-bg-primary, #ffffff);
+}
+
+.search-modal-input::placeholder {
+  color: var(--color-text-tertiary, #9ca3af);
+}
+
+.search-modal-close-btn {
+  position: absolute;
+  right: 8px;
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  color: var(--color-text-tertiary, #9ca3af);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.search-modal-close-btn:hover {
+  background: var(--color-bg-tertiary, #f3f4f6);
+  color: var(--color-text-primary, #111827);
+}
+
+/* Filter Tabs */
+.search-modal-filters {
+  display: flex;
+  gap: 8px;
+}
+
+.search-modal-filter-btn {
+  padding: 6px 12px;
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 6px;
+  background: var(--color-bg-primary, #ffffff);
+  color: var(--color-text-secondary, #6b7280);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.search-modal-filter-btn:hover {
+  background: var(--color-bg-secondary, #f9fafb);
+  border-color: var(--color-text-tertiary, #9ca3af);
+}
+
+.search-modal-filter-btn.active {
+  background: var(--color-primary, #3b82f6);
+  color: #ffffff;
+  border-color: var(--color-primary, #3b82f6);
+}
+
+/* Search Modal Body */
+.search-modal-body {
+  flex: 1;
+  overflow-y: auto;
+  max-height: calc(70vh - 180px);
+}
+
+/* Results List */
+.search-modal-results {
+  padding: 8px;
+}
+
+/* Empty State */
+.search-modal-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--color-text-secondary, #6b7280);
+}
+
+.search-modal-empty svg {
+  color: var(--color-text-tertiary, #9ca3af);
+  margin-bottom: 16px;
+}
+
+.search-modal-empty p {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.search-modal-empty-hint {
+  font-size: 14px;
+  color: var(--color-text-tertiary, #9ca3af);
+  margin: 0;
+}
+
+.search-modal-error {
+  color: var(--color-error, #ef4444);
+}
+
+/* Loader */
+.search-modal-loader {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--color-border, #e5e7eb);
+  border-top-color: var(--color-primary, #3b82f6);
+  border-radius: 50%;
+  animation: search-modal-spin 0.8s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes search-modal-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Search Modal Footer */
+.search-modal-footer {
+  border-top: 1px solid var(--color-border, #e5e7eb);
+  padding: 12px 16px;
+  background: var(--color-bg-secondary, #f9fafb);
+}
+
+.search-modal-hints {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.search-modal-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--color-text-tertiary, #9ca3af);
+}
+
+.search-modal-hint kbd {
+  background: var(--color-bg-primary, #ffffff);
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-secondary, #6b7280);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Scrollbar Styling */
+.search-modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.search-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.search-modal-body::-webkit-scrollbar-thumb {
+  background: var(--color-border, #e5e7eb);
+  border-radius: 4px;
+}
+
+.search-modal-body::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary, #9ca3af);
+}
+
+/* Dark mode support (if needed) */
+@media (prefers-color-scheme: dark) {
+  .search-modal {
+    --color-bg-primary: #1f2937;
+    --color-bg-secondary: #111827;
+    --color-bg-tertiary: #374151;
+    --color-border: #374151;
+    --color-text-primary: #f9fafb;
+    --color-text-secondary: #d1d5db;
+    --color-text-tertiary: #9ca3af;
+  }
+
+  .search-modal-overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .search-modal-overlay {
+    padding-top: 5vh;
+  }
+
+  .search-modal {
+    width: 95%;
+    max-height: 80vh;
+  }
+
+  .search-modal-body {
+    max-height: calc(80vh - 180px);
+  }
+
+  .search-modal-filters {
+    flex-wrap: wrap;
+  }
+}

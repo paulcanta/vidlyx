@@ -1,0 +1,91 @@
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  min-height: 300px;
+}
+
+.empty-state--compact {
+  padding: 2rem 1rem;
+  min-height: 200px;
+}
+
+.empty-state__icon {
+  color: #9ca3af;
+  margin-bottom: 1.5rem;
+  opacity: 0.8;
+}
+
+.empty-state--compact .empty-state__icon {
+  margin-bottom: 1rem;
+}
+
+.empty-state__content {
+  max-width: 500px;
+  margin-bottom: 1.5rem;
+}
+
+.empty-state--compact .empty-state__content {
+  margin-bottom: 1rem;
+}
+
+.empty-state__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 0.75rem 0;
+}
+
+.empty-state--compact .empty-state__title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state__description {
+  font-size: 1rem;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.empty-state--compact .empty-state__description {
+  font-size: 0.875rem;
+}
+
+.empty-state__action {
+  margin-top: 0.5rem;
+}
+
+/* Animation */
+.empty-state__icon {
+  animation: empty-state-fade-in 0.5s ease-out;
+}
+
+@keyframes empty-state-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 0.8;
+    transform: translateY(0);
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .empty-state__icon {
+    color: #6b7280;
+  }
+
+  .empty-state__title {
+    color: #f3f4f6;
+  }
+
+  .empty-state__description {
+    color: #9ca3af;
+  }
+}

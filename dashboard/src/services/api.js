@@ -6,4 +6,7 @@ const api = axios.create({
   timeout: 30000
 });
 
+// Extended timeout for long-running AI operations (2 minutes)
+export const AI_TIMEOUT = 120000;
+
 export default api;

@@ -1,0 +1,465 @@
+/**
+ * Touch Device Optimizations
+ * Styles specifically for touch-enabled devices
+ * Applied when (hover: none) and (pointer: coarse)
+ */
+
+/* Touch Device Detection */
+@media (hover: none) and (pointer: coarse) {
+
+  /* ==================== */
+  /* Touch Target Sizing */
+  /* ==================== */
+
+  /* Buttons - Minimum 44px touch target */
+  button,
+  .btn,
+  [role="button"] {
+    min-width: var(--touch-target-min);
+    min-height: var(--touch-target-min);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  /* Small buttons - Still meet minimum */
+  button.btn-sm,
+  .btn-sm {
+    min-width: var(--touch-target-min);
+    min-height: var(--touch-target-min);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  /* Large buttons - Comfortable size */
+  button.btn-lg,
+  .btn-lg,
+  button.btn-primary,
+  .btn-primary {
+    min-width: var(--touch-target-comfortable);
+    min-height: var(--touch-target-comfortable);
+    padding: var(--space-4) var(--space-6);
+  }
+
+  /* Icon buttons */
+  button.icon-btn,
+  .icon-btn,
+  [aria-label]:not([role="textbox"]) {
+    min-width: var(--touch-target-comfortable);
+    min-height: var(--touch-target-comfortable);
+    padding: var(--space-2);
+  }
+
+  /* Links - Adequate spacing */
+  a {
+    min-height: var(--touch-target-min);
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-1) var(--space-2);
+    margin: -var(--space-1) -var(--space-2);
+  }
+
+  /* Nav links */
+  nav a,
+  .nav-item,
+  .nav-link {
+    min-height: var(--touch-target-comfortable);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  /* ==================== */
+  /* Form Controls */
+  /* ==================== */
+
+  /* Input fields */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  input[type="url"],
+  input[type="tel"],
+  input[type="number"],
+  textarea,
+  select {
+    min-height: var(--touch-target-comfortable);
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-base);
+  }
+
+  /* Checkboxes - Larger tap area */
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-width: 24px;
+    min-height: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Checkbox labels - Larger tap area */
+  input[type="checkbox"] + label,
+  input[type="radio"] + label {
+    padding: var(--space-2) var(--space-3);
+    min-height: var(--touch-target-min);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  /* Range sliders - Larger track */
+  input[type="range"] {
+    height: var(--touch-target-min);
+    padding: var(--space-2) 0;
+  }
+
+  /* ==================== */
+  /* Interactive Elements */
+  /* ==================== */
+
+  /* Tabs */
+  .tab,
+  [role="tab"] {
+    min-height: var(--touch-target-comfortable);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  /* Dropdown items */
+  .dropdown-item,
+  [role="menuitem"] {
+    min-height: var(--touch-target-comfortable);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  /* List items (when clickable) */
+  li[onclick],
+  li[role="button"],
+  .list-item-clickable {
+    min-height: var(--touch-target-comfortable);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  /* Cards (when clickable) */
+  .card[onclick],
+  .card-clickable {
+    cursor: pointer;
+  }
+
+  /* ==================== */
+  /* Disable Hover Effects */
+  /* ==================== */
+
+  /* Remove hover states on touch devices */
+  *:hover {
+    /* Don't apply hover styles on touch */
+  }
+
+  /* Explicitly disable hover for common interactive elements */
+  button:hover,
+  a:hover,
+  .btn:hover,
+  .link:hover {
+    background-color: inherit;
+    color: inherit;
+    border-color: inherit;
+    opacity: inherit;
+  }
+
+  /* ==================== */
+  /* Active/Pressed States */
+  /* ==================== */
+
+  /* Use :active instead of :hover for visual feedback */
+  button:active,
+  .btn:active {
+    transform: scale(0.97);
+    opacity: 0.8;
+  }
+
+  a:active {
+    opacity: 0.7;
+  }
+
+  /* Cards */
+  .card:active {
+    transform: scale(0.98);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Icon buttons */
+  .icon-btn:active {
+    background-color: var(--bg-tertiary);
+  }
+
+  /* ==================== */
+  /* Scrolling */
+  /* ==================== */
+
+  /* Smooth scrolling with momentum */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Scroll containers */
+  .scroll-container,
+  [style*="overflow: auto"],
+  [style*="overflow-y: auto"],
+  [style*="overflow-x: auto"] {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* ==================== */
+  /* Typography */
+  /* ==================== */
+
+  /* Prevent text size adjustment on orientation change */
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Larger base font on mobile for readability */
+  body {
+    font-size: 16px;
+  }
+
+  /* ==================== */
+  /* Spacing */
+  /* ==================== */
+
+  /* Add more breathing room between interactive elements */
+  button + button,
+  .btn + .btn {
+    margin-left: var(--space-3);
+  }
+
+  /* Vertical spacing for stacked buttons */
+  .button-group-vertical button,
+  .btn-group-vertical .btn {
+    margin-top: var(--space-2);
+  }
+
+  .button-group-vertical button:first-child,
+  .btn-group-vertical .btn:first-child {
+    margin-top: 0;
+  }
+
+  /* ==================== */
+  /* Select and Text */
+  /* ==================== */
+
+  /* Prevent text selection on tap */
+  button,
+  .btn,
+  [role="button"],
+  .card-clickable {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Allow text selection in content areas */
+  p,
+  article,
+  .content,
+  [contenteditable] {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+
+  /* ==================== */
+  /* Accessibility */
+  /* ==================== */
+
+  /* Focus indicators - Important for keyboard navigation on touch devices */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* ==================== */
+  /* Gestures */
+  /* ==================== */
+
+  /* Prevent pull-to-refresh on specific elements */
+  .modal,
+  .dropdown,
+  .popover {
+    overscroll-behavior: contain;
+  }
+
+  /* ==================== */
+  /* Component-Specific */
+  /* ==================== */
+
+  /* Modals on touch devices */
+  .modal-overlay {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .modal-content {
+    /* Touch-friendly close button */
+  }
+
+  .modal-close-button,
+  .modal-dismiss {
+    min-width: var(--touch-target-comfortable);
+    min-height: var(--touch-target-comfortable);
+  }
+
+  /* Tooltips - Convert to tap-based */
+  .tooltip {
+    /* Tooltips should be tap-activated, not hover */
+  }
+
+  /* Dropdowns */
+  .dropdown-toggle {
+    min-height: var(--touch-target-comfortable);
+  }
+
+  /* Toggles/Switches */
+  .toggle,
+  .switch,
+  [role="switch"] {
+    min-width: var(--touch-target-comfortable);
+    min-height: var(--touch-target-min);
+  }
+
+  /* ==================== */
+  /* Video Controls */
+  /* ==================== */
+
+  .video-controls button,
+  .player-controls button {
+    min-width: var(--touch-target-comfortable);
+    min-height: var(--touch-target-comfortable);
+  }
+
+  .seek-bar,
+  .progress-bar {
+    height: 12px;
+    cursor: pointer;
+  }
+
+  .seek-bar input[type="range"],
+  .progress-bar input[type="range"] {
+    height: var(--touch-target-min);
+  }
+
+  /* ==================== */
+  /* Tables */
+  /* ==================== */
+
+  /* Make table rows tappable */
+  tr[onclick],
+  tr.clickable {
+    min-height: var(--touch-target-comfortable);
+  }
+
+  td,
+  th {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  /* ==================== */
+  /* Navigation */
+  /* ==================== */
+
+  /* Mobile menu items */
+  .mobile-menu-item,
+  .sidebar .nav-item {
+    min-height: var(--touch-target-comfortable);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  /* Breadcrumbs */
+  .breadcrumb-item {
+    min-height: var(--touch-target-min);
+    padding: var(--space-2);
+  }
+
+  /* ==================== */
+  /* Drag and Drop */
+  /* ==================== */
+
+  /* Make draggable items easier to grab */
+  [draggable="true"] {
+    cursor: grab;
+    padding: var(--space-3);
+    min-height: var(--touch-target-comfortable);
+  }
+
+  [draggable="true"]:active {
+    cursor: grabbing;
+  }
+
+  /* ==================== */
+  /* Badges and Tags */
+  /* ==================== */
+
+  /* Interactive badges/tags */
+  .badge[onclick],
+  .tag[onclick],
+  .chip[onclick] {
+    min-height: var(--touch-target-min);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  /* Close buttons on badges */
+  .badge .close,
+  .tag .close,
+  .chip .close {
+    min-width: 28px;
+    min-height: 28px;
+    padding: var(--space-1);
+  }
+}
+
+/* ==================== */
+/* iOS Specific */
+/* ==================== */
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  /* Prevent iOS zoom on input focus */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+
+  /* Fix iOS button styling */
+  button,
+  input[type="submit"],
+  input[type="button"] {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  /* Prevent iOS from styling inputs */
+  input {
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: var(--border-radius-md);
+  }
+}
+
+/* ==================== */
+/* Android Specific */
+/* ==================== */
+
+/* Android Chrome specific fixes */
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+  /* Android tap highlight */
+  * {
+    -webkit-tap-highlight-color: rgba(99, 102, 241, 0.1);
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: rgba(99, 102, 241, 0.2);
+  }
+}

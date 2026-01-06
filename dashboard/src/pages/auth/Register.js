@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { authService } from '../../services/authService';
+import { useAuth } from '../../contexts/AuthContext';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -13,6 +13,7 @@ function Register() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { register } = useAuth();
 
   const handleChange = (e) => {
     setFormData({
@@ -39,7 +40,7 @@ function Register() {
 
     try {
       const { confirmPassword, ...registerData } = formData;
-      await authService.register(registerData);
+      await register(registerData);
       navigate('/app');
     } catch (err) {
       setError(err.response?.data?.error || 'Registration failed. Please try again.');

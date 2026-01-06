@@ -1,0 +1,149 @@
+/* ============================================
+   AnimatedList Component Styles
+   Staggered list animations
+   ============================================ */
+
+.animated-list {
+  position: relative;
+}
+
+.animated-list-item {
+  position: relative;
+}
+
+/* ============================================
+   FADE ANIMATION
+   ============================================ */
+
+/* Entering */
+.list-fade-enter {
+  opacity: 0;
+}
+
+.list-fade-enter-active {
+  opacity: 1;
+  transition: opacity var(--transition-normal);
+  transition-delay: calc(var(--index, 0) * var(--stagger-delay, 0ms));
+}
+
+/* Exiting */
+.list-fade-exit {
+  opacity: 1;
+}
+
+.list-fade-exit-active {
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+/* ============================================
+   SLIDE ANIMATION
+   ============================================ */
+
+/* Entering */
+.list-slide-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.list-slide-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--transition-normal),
+              transform var(--transition-normal);
+  transition-delay: calc(var(--index, 0) * var(--stagger-delay, 0ms));
+}
+
+/* Exiting */
+.list-slide-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.list-slide-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity var(--transition-fast),
+              transform var(--transition-fast);
+}
+
+/* ============================================
+   SCALE ANIMATION
+   ============================================ */
+
+/* Entering */
+.list-scale-enter {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.list-scale-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity var(--transition-normal),
+              transform var(--transition-normal);
+  transition-delay: calc(var(--index, 0) * var(--stagger-delay, 0ms));
+}
+
+/* Exiting */
+.list-scale-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.list-scale-exit-active {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity var(--transition-fast),
+              transform var(--transition-fast);
+}
+
+/* ============================================
+   SLIDE-LEFT ANIMATION
+   ============================================ */
+
+/* Entering */
+.list-slide-left-enter {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.list-slide-left-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity var(--transition-normal),
+              transform var(--transition-normal);
+  transition-delay: calc(var(--index, 0) * var(--stagger-delay, 0ms));
+}
+
+/* Exiting */
+.list-slide-left-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.list-slide-left-exit-active {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity var(--transition-fast),
+              transform var(--transition-fast);
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .list-fade-enter-active,
+  .list-fade-exit-active,
+  .list-slide-enter-active,
+  .list-slide-exit-active,
+  .list-scale-enter-active,
+  .list-scale-exit-active,
+  .list-slide-left-enter-active,
+  .list-slide-left-exit-active {
+    transition: none !important;
+    transition-delay: 0s !important;
+    transform: none !important;
+  }
+}

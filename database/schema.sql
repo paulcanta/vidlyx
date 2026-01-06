@@ -116,7 +116,9 @@ CREATE TABLE IF NOT EXISTS sections (
     summary TEXT,
     key_points JSONB,
     section_order INTEGER NOT NULL,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    generated_at TIMESTAMP WITH TIME ZONE,
+    UNIQUE (video_id, section_order)
 );
 
 -- Indexes for sections
@@ -133,7 +135,14 @@ CREATE TABLE IF NOT EXISTS video_summaries (
     full_summary TEXT NOT NULL,
     key_takeaways JSONB,
     topics JSONB,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
+    target_audience TEXT,
+    difficulty_level VARCHAR(50),
+    estimated_value TEXT,
+    recommended_for JSONB,
+    prerequisites JSONB,
+    comprehensive_analysis TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 -- Index for video summaries

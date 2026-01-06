@@ -1,0 +1,219 @@
+/**
+ * Add save to folders
+ * @param {string} saveId - Save ID
+ * @param {string} userId - User ID
+ * @param {Array<string>} folderIds - Array of folder IDs to add
+ * @returns {Promise<object>} - Updated save
+ */
+async function addToFolders(saveId, userId, folderIds) {
+  const client = await pool.connect();
+
+  try {
+    await client.query('BEGIN');
+
+    // Verify save ownership
+    const ownerCheck = await client.query(
+      'SELECT id FROM saves WHERE id = $1 AND user_id = $2',
+      [saveId, userId]
+    );
+
+    if (ownerCheck.rows.length === 0) {
+      throw new Error('Save not found or access denied');
+    }
+
+    // Verify all folders belong to user
+    const folderCheck = await client.query(
+      'SELECT id FROM folders WHERE id = ANY($1::uuid[]) AND user_id = $2',
+      [folderIds, userId]
+    );
+
+    const validFolderIds = folderCheck.rows.map(row => row.id);
+
+    if (validFolderIds.length === 0) {
+      throw new Error('No valid folders found');
+    }
+
+    // Add save to folders
+    for (const folderId of validFolderIds) {
+      await client.query(
+        'INSERT INTO save_folders (save_id, folder_id) VALUES ($1, $2) ON CONFLICT (save_id, folder_id) DO NOTHING',
+        [saveId, folderId]
+      );
+    }
+
+    // Update save timestamp
+    await client.query(
+      'UPDATE saves SET updated_at = NOW() WHERE id = $1',
+      [saveId]
+    );
+
+    await client.query('COMMIT');
+
+    // Return updated save
+    return await getSaveById(saveId, userId);
+
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    client.release();
+  }
+}
+
+/**
+ * Remove save from a specific folder
+ * @param {string} saveId - Save ID
+ * @param {string} userId - User ID
+ * @param {string} folderId - Folder ID to remove from
+ * @returns {Promise<object>} - Updated save
+ */
+async function removeFromFolder(saveId, userId, folderId) {
+  const client = await pool.connect();
+
+  try {
+    await client.query('BEGIN');
+
+    // Verify save ownership
+    const ownerCheck = await client.query(
+      'SELECT id FROM saves WHERE id = $1 AND user_id = $2',
+      [saveId, userId]
+    );
+
+    if (ownerCheck.rows.length === 0) {
+      throw new Error('Save not found or access denied');
+    }
+
+    // Verify folder belongs to user
+    const folderCheck = await client.query(
+      'SELECT id FROM folders WHERE id = $1 AND user_id = $2',
+      [folderId, userId]
+    );
+
+    if (folderCheck.rows.length === 0) {
+      throw new Error('Folder not found or access denied');
+    }
+
+    // Remove from folder
+    await client.query(
+      'DELETE FROM save_folders WHERE save_id = $1 AND folder_id = $2',
+      [saveId, folderId]
+    );
+
+    // Update save timestamp
+    await client.query(
+      'UPDATE saves SET updated_at = NOW() WHERE id = $1',
+      [saveId]
+    );
+
+    await client.query('COMMIT');
+
+    // Return updated save
+    return await getSaveById(saveId, userId);
+
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    client.release();
+  }
+}
+
+/**
+ * Set folders for a save (replaces all existing folder associations)
+ * @param {string} saveId - Save ID
+ * @param {string} userId - User ID
+ * @param {Array<string>} folderIds - Array of folder IDs (can be empty to remove all)
+ * @returns {Promise<object>} - Updated save
+ */
+async function setFolders(saveId, userId, folderIds) {
+  const client = await pool.connect();
+
+  try {
+    await client.query('BEGIN');
+
+    // Verify save ownership
+    const ownerCheck = await client.query(
+      'SELECT id FROM saves WHERE id = $1 AND user_id = $2',
+      [saveId, userId]
+    );
+
+    if (ownerCheck.rows.length === 0) {
+      throw new Error('Save not found or access denied');
+    }
+
+    // Remove all existing folder associations
+    await client.query(
+      'DELETE FROM save_folders WHERE save_id = $1',
+      [saveId]
+    );
+
+    // Add new folder associations if any
+    if (folderIds && folderIds.length > 0) {
+      // Verify all folders belong to user
+      const folderCheck = await client.query(
+        'SELECT id FROM folders WHERE id = ANY($1::uuid[]) AND user_id = $2',
+        [folderIds, userId]
+      );
+
+      const validFolderIds = folderCheck.rows.map(row => row.id);
+
+      for (const folderId of validFolderIds) {
+        await client.query(
+          'INSERT INTO save_folders (save_id, folder_id) VALUES ($1, $2)',
+          [saveId, folderId]
+        );
+      }
+    }
+
+    // Update save timestamp
+    await client.query(
+      'UPDATE saves SET updated_at = NOW() WHERE id = $1',
+      [saveId]
+    );
+
+    await client.query('COMMIT');
+
+    // Return updated save
+    return await getSaveById(saveId, userId);
+
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    client.release();
+  }
+}
+
+/**
+ * Get folders for a save
+ * @param {string} saveId - Save ID
+ * @param {string} userId - User ID
+ * @returns {Promise<Array>} - Array of folders
+ */
+async function getSaveFolders(saveId, userId) {
+  // Verify save ownership
+  const ownerCheck = await pool.query(
+    'SELECT id FROM saves WHERE id = $1 AND user_id = $2',
+    [saveId, userId]
+  );
+
+  if (ownerCheck.rows.length === 0) {
+    throw new Error('Save not found or access denied');
+  }
+
+  const foldersQuery = `
+    SELECT
+      f.id,
+      f.name,
+      f.color,
+      f.icon,
+      sf.added_at
+    FROM save_folders sf
+    JOIN folders f ON sf.folder_id = f.id
+    WHERE sf.save_id = $1
+    ORDER BY f.name ASC
+  `;
+
+  const result = await pool.query(foldersQuery, [saveId]);
+  return result.rows;
+}

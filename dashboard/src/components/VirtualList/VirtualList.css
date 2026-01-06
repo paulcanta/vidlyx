@@ -1,0 +1,27 @@
+.virtual-list {
+  position: relative;
+  will-change: scroll-position;
+  -webkit-overflow-scrolling: touch;
+}
+
+.virtual-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.virtual-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.virtual-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.virtual-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.virtual-list-item {
+  box-sizing: border-box;
+}

@@ -1,16 +1,51 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
+import { ShortcutsProvider } from './contexts/ShortcutsContext';
+import { ShortcutsHelp } from './components/Shortcuts';
 import './App.css';
 
 import Landing from './pages/public/Landing';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import MainLayout from './components/Layout/MainLayout';
-import Dashboard from './pages/app/Dashboard';
-import NewVideo from './pages/app/NewVideo';
-import Collection from './pages/app/Collection';
-import Settings from './pages/app/Settings';
+
+// Lazy load page components for code splitting
+const Home = lazy(() => import('./pages/app/Home'));
+const Videos = lazy(() => import('./pages/app/Videos'));
+const NewVideo = lazy(() => import('./pages/app/NewVideo'));
+const VideoAnalysis = lazy(() => import('./pages/app/VideoAnalysis'));
+const Collection = lazy(() => import('./pages/app/Collection'));
+const SaveView = lazy(() => import('./pages/app/SaveView'));
+const Settings = lazy(() => import('./pages/app/Settings'));
+
+// PageLoader component with spinner
+function PageLoader() {
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: '60vh',
+      padding: '2rem'
+    }}>
+      <div style={{
+        width: '40px',
+        height: '40px',
+        border: '4px solid #f3f3f3',
+        borderTop: '4px solid #6366f1',
+        borderRadius: '50%',
+        animation: 'spin 1s linear infinite'
+      }} />
+      <style>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
+    </div>
+  );
+}
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
@@ -35,21 +70,27 @@ function PublicRoute({ children }) {
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-          <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
-          <Route path="/app" element={<PrivateRoute><MainLayout /></PrivateRoute>}>
-            <Route index element={<Dashboard />} />
-            <Route path="new" element={<NewVideo />} />
-            <Route path="collection" element={<Collection />} />
-            <Route path="settings" element={<Settings />} />
-          </Route>
-          <Route path="/dashboard" element={<Navigate to="/app" replace />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </div>
+      <ShortcutsProvider>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+            <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+            <Route path="/app" element={<PrivateRoute><MainLayout /></PrivateRoute>}>
+              <Route index element={<Suspense fallback={<PageLoader />}><Home /></Suspense>} />
+              <Route path="videos" element={<Suspense fallback={<PageLoader />}><Videos /></Suspense>} />
+              <Route path="new" element={<Suspense fallback={<PageLoader />}><NewVideo /></Suspense>} />
+              <Route path="video/:id" element={<Suspense fallback={<PageLoader />}><VideoAnalysis /></Suspense>} />
+              <Route path="collection" element={<Suspense fallback={<PageLoader />}><Collection /></Suspense>} />
+              <Route path="collection/save/:saveId" element={<Suspense fallback={<PageLoader />}><SaveView /></Suspense>} />
+              <Route path="settings" element={<Suspense fallback={<PageLoader />}><Settings /></Suspense>} />
+            </Route>
+            <Route path="/dashboard" element={<Navigate to="/app" replace />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+          <ShortcutsHelp />
+        </div>
+      </ShortcutsProvider>
     </Router>
   );
 }

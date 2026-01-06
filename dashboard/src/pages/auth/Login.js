@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { authService } from '../../services/authService';
+import { useAuth } from '../../contexts/AuthContext';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -8,6 +8,7 @@ function Login() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,7 +16,7 @@ function Login() {
     setLoading(true);
 
     try {
-      await authService.login({ email, password });
+      await login(email, password);
       navigate('/app');
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed. Please try again.');

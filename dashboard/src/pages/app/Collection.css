@@ -1,0 +1,432 @@
+/* Collection Page Responsive Styles */
+.collection-page {
+  display: flex;
+  height: calc(100vh - var(--header-height));
+  overflow: hidden;
+}
+
+/* Sidebar */
+.collection-sidebar {
+  width: 250px;
+  border-right: 1px solid var(--border-color);
+  padding: var(--space-4);
+  overflow-y: auto;
+  background-color: var(--bg-secondary);
+  transition: transform var(--transition-normal);
+}
+
+/* Main Content Area */
+.collection-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6);
+  background-color: var(--bg-primary);
+}
+
+/* Header */
+.collection-header {
+  margin-bottom: var(--space-6);
+}
+
+.collection-header-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.collection-title {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.collection-count {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  font-weight: var(--font-medium);
+  background-color: var(--bg-tertiary);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--border-radius-full);
+}
+
+/* Toolbar */
+.collection-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.collection-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Sort Dropdown */
+.collection-sort-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.collection-sort-select {
+  padding: var(--space-2) var(--space-8) var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  min-height: var(--touch-target-min);
+}
+
+.collection-sort-icon {
+  position: absolute;
+  right: var(--space-3);
+  pointer-events: none;
+  color: var(--text-secondary);
+}
+
+/* View Toggle */
+.collection-view-toggle {
+  display: flex;
+  gap: var(--space-1);
+  background-color: var(--bg-tertiary);
+  padding: var(--space-1);
+  border-radius: var(--border-radius-md);
+}
+
+.collection-view-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
+  border: none;
+  background-color: transparent;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
+}
+
+.collection-view-button:hover {
+  background-color: var(--bg-secondary);
+}
+
+.collection-view-button.active {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+/* Content Area */
+.collection-content {
+  min-height: 200px;
+}
+
+/* Save Grid - Responsive columns */
+.save-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-4);
+}
+
+/* Mobile Navigation Toggle */
+.collection-sidebar-toggle {
+  display: none;
+  position: fixed;
+  bottom: var(--space-4);
+  right: var(--space-4);
+  width: 56px;
+  height: 56px;
+  border-radius: var(--border-radius-full);
+  background-color: var(--color-primary);
+  color: var(--text-inverse);
+  border: none;
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  z-index: var(--z-sticky);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.collection-sidebar-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Sidebar Overlay */
+.collection-sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: calc(var(--z-overlay) - 1);
+}
+
+.collection-sidebar-overlay.active {
+  display: block;
+}
+
+/* Responsive Breakpoints */
+
+/* Large Desktop (1280px and up) - Default layout */
+/* No changes needed */
+
+/* Desktop (1024px - 1279px) - Slightly narrower sidebar */
+@media (max-width: 1279px) {
+  .collection-sidebar {
+    width: 220px;
+  }
+
+  .collection-main {
+    padding: var(--space-5);
+  }
+
+  .save-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+}
+
+/* Tablet (768px - 1023px) - Collapsible sidebar */
+@media (max-width: 1023px) {
+  .collection-page {
+    position: relative;
+  }
+
+  .collection-sidebar {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    bottom: 0;
+    width: 260px;
+    transform: translateX(-100%);
+    z-index: var(--z-overlay);
+    box-shadow: none;
+  }
+
+  .collection-sidebar.open {
+    transform: translateX(0);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .collection-main {
+    padding: var(--space-4);
+  }
+
+  .collection-title {
+    font-size: var(--text-2xl);
+  }
+
+  .collection-toolbar {
+    gap: var(--space-3);
+  }
+
+  .save-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--space-3);
+  }
+
+  .collection-sidebar-toggle {
+    display: flex;
+  }
+}
+
+/* Mobile (below 768px) - Full width layout */
+@media (max-width: 767px) {
+  .collection-main {
+    padding: var(--space-3);
+  }
+
+  .collection-header {
+    margin-bottom: var(--space-4);
+  }
+
+  .collection-title {
+    font-size: var(--text-xl);
+  }
+
+  .collection-count {
+    font-size: var(--text-xs);
+  }
+
+  .collection-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .collection-toolbar-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .collection-sort-container {
+    flex: 1;
+  }
+
+  .collection-sort-select {
+    width: 100%;
+  }
+
+  /* Change grid to single column on very small screens */
+  .save-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+
+  /* Make save cards horizontal on mobile */
+  .save-card {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-3);
+  }
+
+  .save-card-thumbnail {
+    width: 120px;
+    height: 68px;
+    flex-shrink: 0;
+  }
+
+  .save-card-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .collection-sidebar {
+    width: 280px;
+  }
+}
+
+/* Small Mobile (below 480px) - Minimal padding */
+@media (max-width: 479px) {
+  .collection-main {
+    padding: var(--space-2);
+  }
+
+  .collection-header {
+    margin-bottom: var(--space-3);
+  }
+
+  .collection-title {
+    font-size: var(--text-lg);
+  }
+
+  .collection-toolbar {
+    margin-bottom: var(--space-3);
+  }
+
+  .collection-view-toggle {
+    padding: 2px;
+  }
+
+  .collection-view-button {
+    padding: var(--space-1);
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .save-grid {
+    gap: var(--space-2);
+  }
+
+  .save-card-thumbnail {
+    width: 100px;
+    height: 56px;
+  }
+
+  .collection-sidebar {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .collection-sidebar-toggle {
+    width: 48px;
+    height: 48px;
+    bottom: var(--space-3);
+    right: var(--space-3);
+  }
+}
+
+/* Landscape Mobile */
+@media (max-width: 767px) and (orientation: landscape) {
+  .save-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .save-card {
+    flex-direction: column;
+  }
+
+  .save-card-thumbnail {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .collection-view-button {
+    min-width: var(--touch-target-comfortable);
+    min-height: var(--touch-target-comfortable);
+  }
+
+  .collection-sort-select {
+    min-height: var(--touch-target-comfortable);
+    padding: var(--space-3) var(--space-8) var(--space-3) var(--space-3);
+  }
+
+  /* Disable hover effects */
+  .collection-view-button:hover {
+    background-color: transparent;
+  }
+
+  .collection-view-button.active:hover {
+    background-color: var(--color-primary-light);
+  }
+
+  /* Use active states */
+  .collection-view-button:active {
+    background-color: var(--bg-tertiary);
+  }
+
+  .collection-view-button.active:active {
+    background-color: var(--color-primary);
+  }
+
+  /* Larger tap targets for cards */
+  .save-card {
+    min-height: var(--touch-target-comfortable);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .collection-sidebar,
+  .collection-toolbar,
+  .collection-sidebar-toggle {
+    display: none;
+  }
+
+  .collection-main {
+    padding: 0;
+  }
+
+  .save-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

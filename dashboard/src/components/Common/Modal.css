@@ -1,3 +1,7 @@
+/* ============================================
+   MODAL ANIMATIONS
+   ============================================ */
+
 /* Modal Overlay */
 .modal-overlay {
   position: fixed;
@@ -11,7 +15,8 @@
   justify-content: center;
   z-index: var(--z-modal);
   padding: var(--space-4);
-  animation: fadeIn var(--transition-normal) ease-out;
+  animation: fadeIn var(--transition-modal);
+  backdrop-filter: blur(2px);
 }
 
 @keyframes fadeIn {
@@ -32,12 +37,29 @@
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  animation: slideUp var(--transition-normal) ease-out;
+  animation: scaleInModal var(--transition-modal);
+  transform-origin: center;
+}
+
+@keyframes scaleInModal {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Alternative slide animation */
+.modal-content.modal-slide {
+  animation: slideUp var(--transition-modal);
 }
 
 @keyframes slideUp {
   from {
-    transform: translateY(20px);
+    transform: translateY(30px);
     opacity: 0;
   }
   to {
@@ -110,16 +132,187 @@
   border-top: 1px solid var(--border-color);
 }
 
-/* Responsive */
-@media (max-width: 640px) {
+/* Responsive Breakpoints */
+
+/* Tablet (768px - 1023px) - Larger modals */
+@media (max-width: 1023px) {
+  .modal-small {
+    max-width: 480px;
+  }
+
+  .modal-medium {
+    max-width: 680px;
+  }
+
+  .modal-large {
+    max-width: 90vw;
+  }
+}
+
+/* Mobile (below 768px) - Bottom Sheet Style */
+@media (max-width: 767px) {
+  .modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
   .modal-content {
-    max-height: 100vh;
-    border-radius: 0;
+    max-height: 90vh;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+    animation: slideUpFromBottom var(--transition-normal) ease-out;
+  }
+
+  @keyframes slideUpFromBottom {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
   }
 
   .modal-small,
   .modal-medium,
   .modal-large {
     max-width: 100%;
+    width: 100%;
+  }
+
+  .modal-header {
+    padding: var(--space-4);
+    position: relative;
+  }
+
+  /* Add drag handle indicator */
+  .modal-header::before {
+    content: '';
+    position: absolute;
+    top: var(--space-2);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background-color: var(--border-color);
+    border-radius: var(--border-radius-full);
+  }
+
+  .modal-title {
+    font-size: var(--text-lg);
+    margin-top: var(--space-2);
+  }
+
+  .modal-body {
+    padding: var(--space-4);
+  }
+
+  .modal-footer {
+    padding: var(--space-4);
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .modal-footer button {
+    width: 100%;
+    min-height: var(--touch-target-comfortable);
+  }
+}
+
+/* Small Mobile (below 480px) - Full height option */
+@media (max-width: 479px) {
+  .modal-content {
+    max-height: 95vh;
+  }
+
+  .modal-header {
+    padding: var(--space-3);
+  }
+
+  .modal-title {
+    font-size: var(--text-base);
+  }
+
+  .modal-body {
+    padding: var(--space-3);
+  }
+
+  .modal-footer {
+    padding: var(--space-3);
+  }
+
+  .modal-close-button {
+    min-width: var(--touch-target-min);
+    min-height: var(--touch-target-min);
+  }
+}
+
+/* Landscape Mobile - Different approach */
+@media (max-width: 767px) and (orientation: landscape) {
+  .modal-overlay {
+    align-items: center;
+    padding: var(--space-2);
+  }
+
+  .modal-content {
+    max-height: 90vh;
+    border-radius: var(--border-radius-lg);
+    animation: slideUp var(--transition-normal) ease-out;
+  }
+
+  .modal-header::before {
+    display: none;
+  }
+
+  .modal-title {
+    margin-top: 0;
+  }
+
+  .modal-footer {
+    flex-direction: row;
+  }
+
+  .modal-footer button {
+    width: auto;
+    flex: 1;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .modal-close-button {
+    min-width: var(--touch-target-comfortable);
+    min-height: var(--touch-target-comfortable);
+    padding: var(--space-3);
+  }
+
+  .modal-footer button {
+    min-height: var(--touch-target-comfortable);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  /* Disable hover effects */
+  .modal-close-button:hover {
+    background-color: transparent;
+  }
+
+  /* Use active states */
+  .modal-close-button:active {
+    background-color: var(--bg-tertiary);
+  }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-overlay,
+  .modal-content,
+  .modal-content.modal-slide {
+    animation: none !important;
+    backdrop-filter: none;
+  }
+
+  .modal-close-button {
+    transition: none !important;
   }
 }

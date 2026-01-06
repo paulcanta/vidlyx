@@ -1,0 +1,33 @@
+/* Drag and Drop Styles */
+
+/* Folder item drop target state */
+.folder-item.drop-target {
+  background: #dbeafe !important;
+  border: 2px dashed #2563eb !important;
+}
+
+/* Save drag preview */
+.save-drag-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  cursor: grabbing;
+  z-index: 9999;
+}
+
+/* Draggable save card states */
+.draggable-save-card {
+  transition: opacity 0.2s;
+}
+
+.draggable-save-card:active {
+  cursor: grabbing;
+}
+
+.draggable-save-card.dragging {
+  opacity: 0.5;
+}
